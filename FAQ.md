@@ -12,7 +12,7 @@
      增加配置： vi ~/.openclaw/openclaw.json ，在 gateway/controlUi/allowedOrigins 节点下增加 <Host>:<Port> 结构的配置
 	 重启服务： openclaw gateway restart
 
-### 你的宿主机端口不是 18789 (即 docker run -v <宿主机端口>:18789 ...)
+### 你的宿主机端口不是 18789 (即 docker run -v &lt;宿主机端口&gt;:18789 ...)
 
 解决方法：
 

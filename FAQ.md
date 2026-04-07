@@ -2,7 +2,7 @@
 
 ## origin not allowed (open the Control UI from the gateway host or allow it in gateway.controlUi.allowedOrigins)
 
-### 你的 Host 不是 localhost，也不是 127.0.0.1 ？ (即 http://<Host>:<Port>)
+### 你的 Host 不是 localhost，也不是 127.0.0.1 ？ (即 http://&lt;Host&gt;:&lt;Port&gt;)
 
 解决方法：
 

@@ -21,3 +21,6 @@
 解决方法：
 
 重新创建容器，把 “宿主机端口” 设置成 18789。（注意备份docker容器的数据和操作指令）
+
+## unauthorized: gateway token missing (open the dashboard URL and paste the token in Control UI settings)
+

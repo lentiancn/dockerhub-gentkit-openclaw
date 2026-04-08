@@ -28,3 +28,8 @@
 
 openssl rand -hex 32，生成的内容传递给 GATEWAY_TOKEN 环境变量，重启gateway后，网关令牌设置成与 GATEWAY_TOKEN 值一样的内容。
 
+## pairing required
+
+TODO
+
+

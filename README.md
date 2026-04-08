@@ -6,7 +6,7 @@ A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster" 
 
 ## Install Docker environment
 
-[Installation-Guide](https://gitee.com/lentiancn/open-docs/blob/master/en/Docker/2.Installation-Guide.md)
+[Installation-Guide](https://github.com/lentiancn/open-docs/blob/main/en/Docker/2.Installation-Guide.md)
 
 ## Install Container with OpenClaw
 

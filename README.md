@@ -62,6 +62,10 @@ docker start <your container id or name>
 docker stop <your container id or name>
 ```
 
+### Visit OpenClaw gateway UI
+
+    http://localhost:18789
+
 ## Appendix
 
 [FAQ](FAQ.md)

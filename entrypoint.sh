@@ -36,7 +36,7 @@ if [ "${openclaw_configured:false}" != "true" ]; then
   --gateway-token "$GATEWAY_TOKEN"
   echo "openclaw_configured=true" > /tmp/docker_openclaw_configured.env
   echo "OpenClaw configuration initialization completed."
-  openclaw onboard --help
+  #openclaw onboard --help
 fi
 
 # Startup Gateway Service

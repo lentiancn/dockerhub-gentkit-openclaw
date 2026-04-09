@@ -5,11 +5,13 @@
 #
 FROM node:25.9.0-alpine3.23
 
+ARG IMAGE_VERSION=1.0.0
+
 LABEL maintainer="Len <lentiancn@126.com>" \
       description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent Gateway)." \
       org.opencontainers.image.title="OpenClaw Gateway" \
       org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent Gateway)." \
-      org.opencontainers.image.version="v1.0.0" \
+      org.opencontainers.image.version="${IMAGE_VERSION}" \
       org.opencontainers.image.source="https://github.com/lentiancn/dockerhub-gentkit-openclaw" \
       org.opencontainers.image.licenses="MIT"
 

@@ -2,34 +2,36 @@
 
 ## origin not allowed (open the Control UI from the gateway host or allow it in gateway.controlUi.allowedOrigins)
 
-### 你的 Host 不是 localhost，也不是 127.0.0.1 ？ (即 http://&lt;Host&gt;:&lt;Port&gt;)
+### Your host is neither localhost nor 127.0.0.1 (i.e. http://&lt;Host&gt;:&lt;Port&gt;)
 
-解决方法：
+#### Solution
 
-1）改成使用 localhost 或 127.0.0.1 作为 Host 进行访问。 (推荐，只能本地访问更安全)
+Method 1. Use localhost or 127.0.0.1 as the Host for access. (Recommended, more secure as it allows local access only)
 
-2）期望使用宿主机的 hostname 或宿主机的IP 作为 Host。
-     
-    进入到容器： docker exec -it <容器名称> /bin/bash
+Method 2. Expect to use the host machine's hostname or the host machine's IP address as the Host.
 
-    增加配置： vi ~/.openclaw/openclaw.json ，在 gateway/controlUi/allowedOrigins 节点下增加 <Host>:<Port> 结构的配置
+1) Enter the container : docker exec -it <container_name> /bin/bash
 
-    重启服务： openclaw gateway restart
+2) Add configuration : vi ~/.openclaw/openclaw.json, Add an entry in the format <Host>:<Port> under the gateway.controlUi.allowedOrigins node.
 
-### 你的宿主机端口不是 18789 (即 docker run -v &lt;宿主机端口&gt;:18789 ...)
+3) Restart the service : openclaw gateway restart
 
-解决方法：
+### Your host port is not 18789 (i.e., docker run -p <host_port>:18789 ...)
 
-重新创建容器，把 “宿主机端口” 设置成 18789。（注意备份docker容器的数据和操作指令）
+#### Solution
+
+Recreate the container and set the host port to 18789. (NOTE: Back up the data and operation commands of the Docker container)
 
 ## unauthorized: gateway token missing (open the dashboard URL and paste the token in Control UI settings)
 
-解决方法：
+#### Solution
 
-openssl rand -hex 32，生成的内容传递给 GATEWAY_TOKEN 环境变量，重启gateway后，网关令牌设置成与 GATEWAY_TOKEN 值一样的内容。
+1) Generate a token using: openssl rand -hex 32.
+
+2) Set it as the GATEWAY_TOKEN environment variable.
+
+3) After restarting the gateway, configure the gateway token to match the value of GATEWAY_TOKEN.
 
 ## pairing required
 
 TODO
-
-

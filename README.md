@@ -30,9 +30,11 @@ sudo docker run -d \
 gentkit/openclaw:latest
 ```
 
-**NOTE** : It's recommended to set up **/home/openclaw/.openclaw** as a volume to ensure that your OpenClaw data can be backed up on the host machine.
+**NOTE** : It's recommended to set up **/home/openclaw/.openclaw** as a volume to ensure that your OpenClaw data can be
+backed up on the host machine.
 
-**GATEWAY_TOKEN** can be set to any value you prefer (obtainable via **openssl rand -hex 32**). If not provided, the system will retrieve it via **openssl rand -hex 32** by default.
+**GATEWAY_TOKEN** can be set to any value you prefer (obtainable via **openssl rand -hex 32**). If not provided, the
+system will retrieve it via **openssl rand -hex 32** by default.
 
 ## Manage OpenClaw
 

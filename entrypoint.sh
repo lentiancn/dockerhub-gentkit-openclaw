@@ -31,12 +31,11 @@ if [ "${openclaw_configured:false}" != "true" ]; then
   --accept-risk \
   --mode local \
   --gateway-bind lan \
-  --gateway-port "$GATEWAY_PORT" \
+  --gateway-port 18789 \
   --gateway-auth "$GATEWAY_AUTH" \
   --gateway-token "$GATEWAY_TOKEN"
   echo "openclaw_configured=true" > /tmp/docker_openclaw_configured.env
   echo "OpenClaw configuration initialization completed."
-  #openclaw onboard --help
 fi
 
 # Startup Gateway Service

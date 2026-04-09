@@ -19,6 +19,7 @@ echo "node $(node -v)"
 echo "npm $(npm -v)"
 echo "$(openclaw -v)"
 
+# Load openclaw_configured config
 if [ -f /tmp/docker_openclaw_configured.env ]; then
     source /tmp/docker_openclaw_configured.env
 fi
@@ -34,9 +35,10 @@ if [ "${openclaw_configured:false}" != "true" ]; then
   --gateway-port 18789 \
   --gateway-auth "$GATEWAY_AUTH" \
   --gateway-token "$GATEWAY_TOKEN"
+  # Store to openclaw_configured config
   echo "openclaw_configured=true" > /tmp/docker_openclaw_configured.env
   echo "OpenClaw configuration initialization completed."
 fi
 
-# Startup Gateway Service
+# Start OpenClaw gateway
 exec openclaw gateway

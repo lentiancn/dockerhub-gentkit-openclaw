@@ -8,9 +8,9 @@ FROM node:25.9.0-alpine3.23
 ARG IMAGE_VERSION=1.0.0
 
 LABEL maintainer="Len <lentiancn@126.com>" \
-      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent Gateway)." \
+      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
       org.opencontainers.image.title="OpenClaw Gateway" \
-      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent Gateway)." \
+      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
       org.opencontainers.image.version="${IMAGE_VERSION}" \
       org.opencontainers.image.source="https://github.com/lentiancn/dockerhub-gentkit-openclaw" \
       org.opencontainers.image.licenses="MIT"
@@ -30,9 +30,7 @@ RUN set -x && \
 	# create directory for docker
 	mkdir -p /usr/local/docker
 
-COPY entrypoint.sh /usr/local/docker/entrypoint.sh
-
-RUN set -x && chmod +x /usr/local/docker/entrypoint.sh
+COPY --chmod=755 entrypoint.sh /usr/local/docker/entrypoint.sh
 
 EXPOSE 18789
 

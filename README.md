@@ -2,7 +2,7 @@
 
 ## Introduction
 
-A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster" AI Agent Gateway).
+A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent).
 
 ## Install Docker environment
 
@@ -24,7 +24,7 @@ step 2 :
 sudo docker run -d \
 -p 18789:18789 \
 -v /usr/local/openclaw:/home/openclaw/.openclaw:rw \
--e GATEWAY_TOKEN=<your token> \
+-e GATEWAY_TOKEN=<YOUR_TOKEN> \
 --restart unless-stopped \
 --name OpenClaw \
 gentkit/openclaw:latest
@@ -48,7 +48,7 @@ ls -l ~/.openclaw
 
 ```shell
 # enter Docker container
-docker exec -it <your container id or name> /bin/bash
+docker exec -it <YOUR_CONTAINER_ID or YOUR_CONTAINER_NAME> /bin/bash
 
 # view or edit
 vi ~/.openclaw/openclaw.json
@@ -71,4 +71,3 @@ docker stop <your container id or name>
 ## Appendix
 
 [FAQ](FAQ.md)
-

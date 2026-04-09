@@ -5,11 +5,13 @@
 #
 FROM node:25.9.0-alpine3.23
 
-LABEL maintainer="gentkit@126.com"
-LABEL description="OpenClaw Container"
-LABEL version="1.0.0"
-
-ENV GATEWAY_PORT=18789
+LABEL maintainer="Len <lentiancn@126.com>" \
+      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent Gateway)." \
+      org.opencontainers.image.title="OpenClaw Gateway" \
+      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent Gateway)." \
+      org.opencontainers.image.version="v1.0.0" \
+      org.opencontainers.image.source="https://github.com/lentiancn/dockerhub-gentkit-openclaw" \
+      org.opencontainers.image.licenses="MIT"
 
 RUN set -x && \
     # install software
@@ -30,7 +32,7 @@ COPY entrypoint.sh /usr/local/docker/entrypoint.sh
 
 RUN set -x && chmod +x /usr/local/docker/entrypoint.sh
 
-EXPOSE $GATEWAY_PORT
+EXPOSE 18789
 
 USER openclaw
 

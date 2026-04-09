@@ -21,6 +21,15 @@ sudo chown -R 6001:6001 /usr/local/openclaw
 step 2 :
 
 ```shell
+# Generate and remember your token
+# Replace YOUR_TOKEN in [step 3] and use it for first-time setup at http://localhost:18789
+# Must match exactly
+sudo apt install openssl && openssl rand -hex 32
+```
+
+step 3 :
+
+```shell
 sudo docker run -d \
 -p 18789:18789 \
 -v /usr/local/openclaw:/home/openclaw/.openclaw:rw \

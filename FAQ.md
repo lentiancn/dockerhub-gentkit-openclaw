@@ -12,7 +12,8 @@ Method 2. Expect to use the host machine's hostname or the host machine's IP add
 
 1) Enter the container : docker exec -it <container_name> /bin/bash
 
-2) Add configuration : vi ~/.openclaw/openclaw.json, Add an entry in the format <Host>:<Port> under the gateway.controlUi.allowedOrigins node.
+2) Add configuration : vi ~/.openclaw/openclaw.json, Add an entry in the format <Host>:<Port> under the
+   gateway.controlUi.allowedOrigins node.
 
 3) Restart the service : openclaw gateway restart
 
@@ -20,7 +21,8 @@ Method 2. Expect to use the host machine's hostname or the host machine's IP add
 
 #### Solution
 
-Recreate the container and set the host port to 18789. (NOTE: Back up the data and operation commands of the Docker container)
+Recreate the container and set the host port to 18789. (NOTE: Back up the data and operation commands of the Docker
+container)
 
 ## unauthorized: gateway token missing (open the dashboard URL and paste the token in Control UI settings)
 

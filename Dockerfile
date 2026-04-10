@@ -3,7 +3,8 @@
 #
 # https://github.com/lentiancn/dockerhub-gentkit-openclaw/blob/main/LICENSE
 #
-# Phase 1
+
+# stage-1
 FROM node:25.9.0-alpine3.23 AS builder
 
 RUN set -eux && \
@@ -18,7 +19,7 @@ RUN set -eux && \
     # delete temp files
     rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
 
-# Phase 2
+# stage-2
 FROM node:25.9.0-alpine3.23
 
 ARG IMAGE_VERSION=1.0.1-beta

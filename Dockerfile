@@ -20,7 +20,7 @@ RUN set -eux && \
     rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
 
 # stage-2
-FROM node:25.9.0-alpine3.23
+FROM node:25.9.0-alpine3.23 AS final
 
 ARG IMAGE_VERSION=1.0.1-beta
 

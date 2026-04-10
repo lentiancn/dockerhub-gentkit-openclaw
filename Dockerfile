@@ -21,7 +21,7 @@ RUN set -eux && \
 # Phase 2
 FROM node:25.9.0-alpine3.23
 
-ARG IMAGE_VERSION=1.0.1-BETA
+ARG IMAGE_VERSION=1.0.1-beta
 
 LABEL maintainer="Len <lentiancn@126.com>" \
       description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \

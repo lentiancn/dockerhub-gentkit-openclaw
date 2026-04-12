@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# https://github.com/lentiancn/dockerhub-gentkit-openclaw/blob/main/LICENSE
+# https://github.com/lentiancn/docker-gentkit-openclaw/blob/main/LICENSE
 #
 FROM node:25.9.0-alpine3.23
 
@@ -12,7 +12,7 @@ LABEL maintainer="Len <lentiancn@126.com>" \
       org.opencontainers.image.title="OpenClaw Gateway" \
       org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
       org.opencontainers.image.version="${IMAGE_VERSION}" \
-      org.opencontainers.image.source="https://github.com/lentiancn/dockerhub-gentkit-openclaw" \
+      org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
       org.opencontainers.image.licenses="MIT"
 
 RUN set -x && \

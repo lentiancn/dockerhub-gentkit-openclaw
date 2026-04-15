@@ -3,17 +3,35 @@
 #
 # https://github.com/lentiancn/docker-gentkit-openclaw/blob/main/LICENSE
 #
-FROM node:25.9.0-alpine3.23
 
-ARG IMAGE_VERSION=1.0.0
+#
+# NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
+#
+ARG NODE_IMAGE_VERSION="unknown"
 
+#
+# Use 'gentkit/node' as the base image with specified version
+#
+FROM gentkit/node:${NODE_IMAGE_VERSION}
+
+#
+# Define build arguments for image metadata
+#
+ARG IMAGE_VERSION="unknown"
+ARG IMAGE_BUILD_DATE="unknown"
+
+#
+# Image metadata labels following OCI Image Format Specification
+#
 LABEL maintainer="Len <lentiancn@126.com>" \
-      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
-      org.opencontainers.image.title="OpenClaw Gateway" \
-      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
-      org.opencontainers.image.version="${IMAGE_VERSION}" \
+      description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
+      org.opencontainers.image.title="OpenClaw on Docker" \
+      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
+      org.opencontainers.image.vendor="GentKit" \
+      org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
-      org.opencontainers.image.licenses="MIT"
+      org.opencontainers.image.version="${IMAGE_VERSION}" \
+      org.opencontainers.image.created="${IMAGE_BUILD_DATE}"
 
 RUN set -x && \
     # install software

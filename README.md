@@ -1,6 +1,7 @@
-# OpenClaw under Docker
+# OpenClaw on Docker
 
-## Introduction
+[![MIT License](https://img.shields.io/github/license/lentiancn/docker-gentkit-openclaw.svg?style=flat-square&label=license)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/tag/lentiancn/docker-gentkit-openclaw.svg?style=flat-square&sort=date&label=release)](https://github.com/lentiancn/docker-gentkit-openclaw/releases)
 
 A lightweight Docker image for quick and easy deployment of OpenClaw ("lobsterðŸ¦ž" AI Agent).
 
@@ -8,32 +9,36 @@ A lightweight Docker image for quick and easy deployment of OpenClaw ("lobsterðŸ
 
 [Installation-Guide](https://github.com/lentiancn/open-docs/blob/main/en/Docker/2.Installation-Guide.md)
 
-## Install Container with OpenClaw
+## Install OpenClaw
 
-step 1 :
+step 1 : Create home directory and set permission
 
 ```shell
 sudo mkdir -p /usr/local/openclaw
 
+# 6001 is the uid and gid of the user running the Docker container
 sudo chown -R 6001:6001 /usr/local/openclaw
 ```
 
-step 2 :
+step 2 : Generate and remember your token
 
 ```shell
-# Generate and remember your token
-# Replace YOUR_TOKEN in [step 3] and use it for first-time setup at http://localhost:18789
+# 
+# Replace <your_token> in [step 3] and use it for first-time setup at http://localhost:18789
 # Must match exactly
-sudo apt install openssl && openssl rand -hex 32
+## e.g. CentOS / RHEL / Fedora
+sudo yum install openssl -y && openssl rand -hex 32
+## e.g. Debian / Ubuntu
+sudo apt install openssl -y && openssl rand -hex 32
 ```
 
-step 3 :
+step 3 : Pull and run a new container
 
 ```shell
 sudo docker run -d \
 -p 18789:18789 \
 -v /usr/local/openclaw:/home/openclaw/.openclaw:rw \
--e GATEWAY_TOKEN=<YOUR_TOKEN> \
+-e GATEWAY_TOKEN=<your_token> \
 --restart unless-stopped \
 --name OpenClaw \
 gentkit/openclaw:latest
@@ -57,7 +62,7 @@ ls -l ~/.openclaw
 
 ```shell
 # enter Docker container
-docker exec -it <YOUR_CONTAINER_ID or YOUR_CONTAINER_NAME> /bin/bash
+docker exec -it <your_container_id or your_container_name> /bin/bash
 
 # view or edit
 vi ~/.openclaw/openclaw.json
@@ -67,10 +72,10 @@ vi ~/.openclaw/openclaw.json
 
 ```shell
 # start OpenClaw gateway
-docker start <your container id or name>
+docker start <your_container_id or your_container_name>
 
 # stop OpenClaw gateway
-docker stop <your container id or name>
+docker stop <your_container_id or your_container_name>
 ```
 
 ### Visit OpenClaw gateway UI

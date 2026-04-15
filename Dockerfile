@@ -4,8 +4,22 @@
 # https://github.com/lentiancn/docker-gentkit-openclaw/blob/main/LICENSE
 #
 
-# stage-1
-FROM node:25.9.0-alpine3.23 AS builder
+#
+# NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
+#
+ARG NODE_IMAGE_VERSION="unknown"
+
+#
+# Use 'gentkit/node' as the base image with specified version
+#
+FROM gentkit/node:${NODE_IMAGE_VERSION} AS builder
+
+#
+# Define build arguments for image metadata
+#
+ARG IMAGE_VERSION="unknown"
+ARG IMAGE_BUILD_DATE="unknown"
+ARG NODE_IMAGE_VERSION="unknown"
 
 RUN set -eux && \
     # install software
@@ -20,7 +34,7 @@ RUN set -eux && \
     rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
 
 # stage-2
-FROM node:25.9.0-alpine3.23 AS final
+FROM gentkit/node:${NODE_IMAGE_VERSION} AS production
 
 ARG IMAGE_VERSION=1.0.1-beta
 

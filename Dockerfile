@@ -12,41 +12,49 @@ ARG NODE_IMAGE_VERSION="unknown"
 #
 # Use 'gentkit/node' as the base image with specified version
 #
-FROM gentkit/node:${NODE_IMAGE_VERSION}
+FROM gentkit/node:${NODE_IMAGE_VERSION} AS builder
 
 #
 # Define build arguments for image metadata
 #
 ARG IMAGE_VERSION="unknown"
 ARG IMAGE_BUILD_DATE="unknown"
+ARG NODE_IMAGE_VERSION="unknown"
 
-#
-# Image metadata labels following OCI Image Format Specification
-#
-LABEL maintainer="Len <lentiancn@126.com>" \
-      description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
-      org.opencontainers.image.title="OpenClaw on Docker" \
-      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
-      org.opencontainers.image.vendor="GentKit" \
-      org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
-      org.opencontainers.image.version="${IMAGE_VERSION}" \
-      org.opencontainers.image.created="${IMAGE_BUILD_DATE}"
-
-RUN set -x && \
+RUN set -eux && \
     # install software
-    apk add --no-cache bash openssl curl net-tools && \
-	# install openclaw and depend libs
-    npm i -g openclaw @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
-	# create group and user
-    addgroup -g 6001 -S openclaw && \
-    adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
+    apk add --no-cache bash openssl curl net-tools git make g++ cmake python3 && \
+    # install openclaw and depend libs
+    npm i -g openclaw --loglevel error --no-fund --no-audit && \
+	# install depend libs
+    #npm i -g @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
 	# clean npm cache
     npm cache clean --force && \
     # delete temp files
-    rm -rf /tmp/* /var/tmp/* && \
-	# create directory for docker
-	mkdir -p /usr/local/docker
+    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
+
+# stage-2
+FROM gentkit/node:${NODE_IMAGE_VERSION} AS production
+
+ARG IMAGE_VERSION=1.0.1-beta
+
+LABEL maintainer="Len <lentiancn@126.com>" \
+      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
+      org.opencontainers.image.title="OpenClaw Gateway" \
+      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
+      org.opencontainers.image.version="${IMAGE_VERSION}" \
+      org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
+      org.opencontainers.image.licenses="MIT"
+
+RUN set -eux && \
+    apk add --no-cache bash curl openssl net-tools && \
+    # create group and user
+    addgroup -g 6001 -S openclaw && \
+    adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
+    mkdir -p /usr/local/docker
+
+COPY --from=builder /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY --chmod=755 entrypoint.sh /usr/local/docker/entrypoint.sh
 

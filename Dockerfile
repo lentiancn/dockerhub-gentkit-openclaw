@@ -5,6 +5,8 @@
 #
 
 #
+# Stage 1 : builder
+#
 # NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
 #
 ARG NODE_IMAGE_VERSION="unknown"
@@ -17,51 +19,84 @@ FROM gentkit/node:${NODE_IMAGE_VERSION} AS builder
 #
 # Define build arguments for image metadata
 #
-ARG IMAGE_VERSION="unknown"
-ARG IMAGE_BUILD_DATE="unknown"
 ARG NODE_IMAGE_VERSION="unknown"
+ARG OPENCLAW_VERSION="unknown"
 
 RUN set -eux && \
     # install software
-    apk add --no-cache bash openssl curl net-tools git make g++ cmake python3 && \
-    # install openclaw and depend libs
-    npm i -g openclaw --loglevel error --no-fund --no-audit && \
+    apk add --no-cache git && \
+    # install openclaw
+    npm i -g openclaw@${OPENCLAW_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs
     #npm i -g @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
 	# clean npm cache
     npm cache clean --force && \
     # delete temp files
-    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
+    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache && \
+    echo "Build completed successfully"
 
-# stage-2
+#
+# Stage 2 : production
+#
 FROM gentkit/node:${NODE_IMAGE_VERSION} AS production
 
-ARG IMAGE_VERSION=1.0.1-beta
+#
+# Define build arguments for image metadata
+#
+ARG IMAGE_VERSION="unknown"
+ARG IMAGE_BUILD_DATE="unknown"
 
+#
+# Image metadata labels following OCI Image Format Specification
+#
 LABEL maintainer="Len <lentiancn@126.com>" \
-      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
-      org.opencontainers.image.title="OpenClaw Gateway" \
-      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster\" AI Agent)." \
-      org.opencontainers.image.version="${IMAGE_VERSION}" \
+      description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
+      org.opencontainers.image.title="OpenClaw on Docker" \
+      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
+      org.opencontainers.image.vendor="GentKit" \
+      org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
-      org.opencontainers.image.licenses="MIT"
+      org.opencontainers.image.version="${IMAGE_VERSION}" \
+      org.opencontainers.image.created="${IMAGE_BUILD_DATE}"
 
+#
+# Copy resources
+#
+COPY --from=builder /usr/local/node/lib/node_modules/openclaw /usr/local/node/lib/node_modules/openclaw
+COPY --from=builder /usr/local/node/bin/openclaw /usr/local/node/bin/openclaw
+
+#
+# Configure node
+#
 RUN set -eux && \
-    apk add --no-cache bash curl openssl net-tools && \
+    apk add --no-cache bash && \
+    #apk add --no-cache bash curl openssl net-tools && \
     # create group and user
     addgroup -g 6001 -S openclaw && \
     adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
     mkdir -p /usr/local/docker
 
-COPY --from=builder /usr/local/lib/node_modules /usr/local/lib/node_modules
-COPY --from=builder /usr/local/bin /usr/local/bin
+#
+# Copy scripts
+#
+COPY --chmod=755 scripts /usr/local/docker/scripts
 
-COPY --chmod=755 entrypoint.sh /usr/local/docker/entrypoint.sh
-
+#
+# Expose port
+#
 EXPOSE 18789
 
+#
+# Set user
+#
 USER openclaw
 
+#
+# Set working directory
+#
 WORKDIR /home/openclaw
 
-ENTRYPOINT ["/bin/bash", "-c", "/usr/local/docker/entrypoint.sh"]
+#
+# Set entrypoint
+#
+ENTRYPOINT ["/bin/bash", "-c", "/usr/local/docker/scripts/entrypoint.sh"]

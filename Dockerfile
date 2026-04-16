@@ -59,12 +59,6 @@ LABEL maintainer="Len <lentiancn@126.com>" \
       org.opencontainers.image.created="${OPENCLAW_IMAGE_BUILD_DATE}"
 
 #
-# Copy resources
-#
-COPY --from=builder /usr/local/node/lib/node_modules/openclaw /usr/local/node/lib/node_modules/openclaw
-COPY --from=builder /usr/local/node/bin/openclaw /usr/local/node/bin/openclaw
-
-#
 # Configure node
 #
 RUN set -eux && \
@@ -73,11 +67,16 @@ RUN set -eux && \
     # create group and user
     addgroup -g 6001 -S openclaw && \
     adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
+    # create directory
+    mkdir -p /usr/local/node/bin && \
+    mkdir -p /usr/local/node/lib/node_modules && \
     mkdir -p /usr/local/docker
 
 #
-# Copy scripts
+# Copy resources
 #
+COPY --from=builder /usr/local/node/lib/node_modules/openclaw /usr/local/node/lib/node_modules/openclaw
+COPY --from=builder /usr/local/node/bin/openclaw /usr/local/node/bin/openclaw
 COPY --chmod=755 scripts /usr/local/docker/scripts
 
 #

@@ -22,6 +22,8 @@ FROM gentkit/node:${NODE_IMAGE_TAG} AS builder
 ARG NODE_IMAGE_TAG="unknown"
 ARG OPENCLAW_NPM_VERSION="unknown"
 
+COPY --chmod=755 scripts /usr/local/docker/scripts
+
 RUN set -eux && \
     # install software
     apk add --no-cache git && \
@@ -32,7 +34,12 @@ RUN set -eux && \
 	# clean npm cache
     npm cache clean --force && \
     # delete temp files
-    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
+    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache && \
+    # prepare resources
+    tar -zcf /dist.tar.gz \
+        -C / usr/local/node/bin/openclaw \
+        -C / usr/local/node/lib/node_modules/openclaw \
+        -C / usr/local/docker/scripts
 
 #
 # Stage 2 : production
@@ -59,9 +66,16 @@ LABEL maintainer="Len <lentiancn@126.com>" \
       org.opencontainers.image.created="${OPENCLAW_IMAGE_BUILD_DATE}"
 
 #
+# Copy resources
+#
+COPY --from=builder /dist.tar.gz /
+
+#
 # Configure node
 #
 RUN set -eux && \
+    tar -zxf /dist.tar.gz -C / && \
+    rm -rf /dist.tar.gz && \
     apk add --no-cache bash openssl git && \
     #apk add --no-cache bash curl openssl net-tools && \
     # create group and user
@@ -71,13 +85,6 @@ RUN set -eux && \
     mkdir -p /usr/local/node/bin && \
     mkdir -p /usr/local/node/lib/node_modules && \
     mkdir -p /usr/local/docker
-
-#
-# Copy resources
-#
-COPY --from=builder /usr/local/node/lib/node_modules/openclaw /usr/local/node/lib/node_modules/openclaw
-COPY --from=builder /usr/local/node/bin/openclaw /usr/local/node/bin/openclaw
-COPY --chmod=755 scripts /usr/local/docker/scripts
 
 #
 # Expose port

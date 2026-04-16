@@ -9,17 +9,17 @@
 #
 # NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
 #
-ARG NODE_IMAGE_VERSION="unknown"
+ARG NODE_IMAGE_TAG="unknown"
 
 #
 # Use 'gentkit/node' as the base image with specified version
 #
-FROM gentkit/node:${NODE_IMAGE_VERSION} AS builder
+FROM gentkit/node:${NODE_IMAGE_TAG} AS builder
 
 #
 # Define build arguments for image metadata
 #
-ARG NODE_IMAGE_VERSION="unknown"
+ARG NODE_IMAGE_TAG="unknown"
 ARG OPENCLAW_VERSION="unknown"
 
 RUN set -eux && \
@@ -37,7 +37,7 @@ RUN set -eux && \
 #
 # Stage 2 : production
 #
-FROM gentkit/node:${NODE_IMAGE_VERSION} AS production
+FROM gentkit/node:${NODE_IMAGE_TAG} AS production
 
 #
 # Define build arguments for image metadata

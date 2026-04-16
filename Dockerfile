@@ -68,7 +68,7 @@ COPY --from=builder /usr/local/node/bin/openclaw /usr/local/node/bin/openclaw
 # Configure node
 #
 RUN set -eux && \
-    apk add --no-cache bash openssl && \
+    apk add --no-cache bash openssl git && \
     #apk add --no-cache bash curl openssl net-tools && \
     # create group and user
     addgroup -g 6001 -S openclaw && \

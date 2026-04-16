@@ -20,13 +20,13 @@ FROM gentkit/node:${NODE_IMAGE_TAG} AS builder
 # Define build arguments for image metadata
 #
 ARG NODE_IMAGE_TAG="unknown"
-ARG NPM_INSTALL_OPENCLAW_VERSION="unknown"
+ARG OPENCLAW_NPM_VERSION="unknown"
 
 RUN set -eux && \
     # install software
     apk add --no-cache git && \
     # install openclaw
-    npm i -g openclaw@${NPM_INSTALL_OPENCLAW_VERSION} --loglevel error --no-fund --no-audit && \
+    npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs
     #npm i -g @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
 	# clean npm cache
@@ -42,8 +42,8 @@ FROM gentkit/node:${NODE_IMAGE_TAG} AS production
 #
 # Define build arguments for image metadata
 #
-ARG IMAGE_VERSION="unknown"
-ARG IMAGE_BUILD_DATE="unknown"
+ARG OPENCLAW_IMAGE_VERSION="unknown"
+ARG OPENCLAW_IMAGE_BUILD_DATE="unknown"
 
 #
 # Image metadata labels following OCI Image Format Specification
@@ -55,8 +55,8 @@ LABEL maintainer="Len <lentiancn@126.com>" \
       org.opencontainers.image.vendor="GentKit" \
       org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
-      org.opencontainers.image.version="${IMAGE_VERSION}" \
-      org.opencontainers.image.created="${IMAGE_BUILD_DATE}"
+      org.opencontainers.image.version="${OPENCLAW_IMAGE_VERSION}" \
+      org.opencontainers.image.created="${OPENCLAW_IMAGE_BUILD_DATE}"
 
 #
 # Copy resources

@@ -32,8 +32,7 @@ RUN set -eux && \
 	# clean npm cache
     npm cache clean --force && \
     # delete temp files
-    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache && \
-    echo "Build completed successfully"
+    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
 
 #
 # Stage 2 : production

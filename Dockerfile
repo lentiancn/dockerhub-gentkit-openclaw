@@ -20,13 +20,13 @@ FROM gentkit/node:${NODE_IMAGE_TAG} AS builder
 # Define build arguments for image metadata
 #
 ARG NODE_IMAGE_TAG="unknown"
-ARG OPENCLAW_VERSION="unknown"
+ARG NPM_INSTALL_OPENCLAW_VERSION="unknown"
 
 RUN set -eux && \
     # install software
     apk add --no-cache git && \
     # install openclaw
-    npm i -g openclaw@${OPENCLAW_VERSION} --loglevel error --no-fund --no-audit && \
+    npm i -g openclaw@${NPM_INSTALL_OPENCLAW_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs
     #npm i -g @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
 	# clean npm cache

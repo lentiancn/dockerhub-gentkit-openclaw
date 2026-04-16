@@ -32,7 +32,7 @@ RUN set -eux && \
 	# clean npm cache
     npm cache clean --force && \
     # delete temp files
-    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache
+    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache /var/cache/apk/*
 
 #
 # Stage 2 : production
@@ -49,9 +49,9 @@ ARG OPENCLAW_IMAGE_BUILD_DATE="unknown"
 # Image metadata labels following OCI Image Format Specification
 #
 LABEL maintainer="Len <lentiancn@126.com>" \
-      description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
+      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster🦞\" AI Agent)." \
       org.opencontainers.image.title="OpenClaw on Docker" \
-      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent)." \
+      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster🦞\" AI Agent)." \
       org.opencontainers.image.vendor="GentKit" \
       org.opencontainers.image.licenses="MIT" \
       org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
@@ -80,7 +80,7 @@ COPY --from=builder \
 COPY --from=builder \
     /usr/local/node/lib/node_modules/openclaw \
     /usr/local/node/lib/node_modules/
-COPY --from=builder --chmod=755 \
+COPY --chmod=755 \
     scripts \
     /usr/local/docker/
 

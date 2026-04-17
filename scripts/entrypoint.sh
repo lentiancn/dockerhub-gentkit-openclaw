@@ -7,7 +7,7 @@
 set -e
 
 # Initialize
-source /usr/local/docker/scripts/init.sh
+source /etc/docker/scripts/init.sh
 
 # Print version
 echo "node $(node -v)"

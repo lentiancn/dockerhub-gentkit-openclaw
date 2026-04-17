@@ -39,12 +39,13 @@ RUN set -eu && \
     addgroup -g 6001 -S openclaw && \
     adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
     # create directory \
-    mkdir -p /usr/local/docker/scripts
+    mkdir -p /etc/docker/scripts && \
+    mkdir -p /usr/local/openclaw
 
 # Copy resources
 COPY --chmod=755 \
     scripts/* \
-    /usr/local/docker/scripts/
+    /etc/docker/scripts/
 
 #
 # Image metadata labels following OCI Image Format Specification
@@ -77,4 +78,4 @@ EXPOSE 18789
 #
 # Set entrypoint
 #
-ENTRYPOINT ["/bin/bash", "-c", "/usr/local/docker/scripts/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "-c", "/etc/docker/scripts/entrypoint.sh"]

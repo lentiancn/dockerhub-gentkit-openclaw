@@ -5,45 +5,44 @@
 #
 
 #
-# Stage 1 : builder
+# Use 'gentkit/node' as the base image with specified version
 #
 # NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
 #
 ARG NODE_IMAGE_TAG="unknown"
-
-#
-# Use 'gentkit/node' as the base image with specified version
-#
-FROM gentkit/node:${NODE_IMAGE_TAG} AS builder
-
-#
-# Define build arguments for image metadata
-#
-ARG NODE_IMAGE_TAG="unknown"
-ARG OPENCLAW_NPM_VERSION="unknown"
-
-RUN set -eux && \
-    # install software
-    apk add --no-cache git && \
-    # install openclaw
-    npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
-	# install depend libs
-    #npm i -g @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
-	# clean npm cache
-    npm cache clean --force && \
-    # delete temp files
-    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache /var/cache/apk/*
-
-#
-# Stage 2 : production
-#
-FROM gentkit/node:${NODE_IMAGE_TAG} AS production
+FROM gentkit/node:${NODE_IMAGE_TAG}
 
 #
 # Define build arguments for image metadata
 #
 ARG OPENCLAW_IMAGE_VERSION="unknown"
 ARG OPENCLAW_IMAGE_BUILD_DATE="unknown"
+ARG OPENCLAW_NPM_VERSION="unknown"
+
+#
+# Install OpenClaw and configure
+#
+RUN set -eux && \
+    # install software \
+    apk add --no-cache bash openssl git && \
+    # install openclaw \
+    npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
+	# install depend libs \
+    #npm i -g @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
+    # clean npm cache \
+    npm cache clean --force && \
+    # delete temp files \
+    rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache /var/cache/apk/* && \
+    # create group and user \
+    addgroup -g 6001 -S openclaw && \
+    adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
+    # create directory \
+    mkdir -p /usr/local/docker/scripts
+
+# Copy resources
+COPY --chmod=755 \
+    scripts/* \
+    /usr/local/docker/scripts/
 
 #
 # Image metadata labels following OCI Image Format Specification
@@ -59,37 +58,6 @@ LABEL maintainer="Len <lentiancn@126.com>" \
       org.opencontainers.image.created="${OPENCLAW_IMAGE_BUILD_DATE}"
 
 #
-# Configure node
-#
-RUN set -eux && \
-    apk add --no-cache bash openssl git && \
-    rm -rf /var/cache/apk/* && \
-    #apk add --no-cache bash curl openssl net-tools && \
-    # create group and user
-    addgroup -g 6001 -S openclaw && \
-    adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
-    # create directory
-    mkdir -p /usr/local/node/bin \
-        /usr/local/node/lib/node_modules \
-        /usr/local/docker
-
-# Copy resources
-COPY --from=builder \
-    /usr/local/node/bin/openclaw \
-    /usr/local/node/bin/
-COPY --from=builder \
-    /usr/local/node/lib/node_modules/openclaw \
-    /usr/local/node/lib/node_modules/
-COPY --chmod=755 \
-    scripts \
-    /usr/local/docker/
-
-#
-# Expose port
-#
-EXPOSE 18789
-
-#
 # Set user
 #
 USER openclaw
@@ -98,6 +66,11 @@ USER openclaw
 # Set working directory
 #
 WORKDIR /home/openclaw
+
+#
+# Expose port
+#
+EXPOSE 18789
 
 #
 # Set entrypoint

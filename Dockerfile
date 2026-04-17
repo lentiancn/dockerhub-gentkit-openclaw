@@ -22,7 +22,7 @@ ARG OPENCLAW_NPM_VERSION="unknown"
 #
 # Install OpenClaw and configure
 #
-RUN set -eux && \
+RUN set -eu && \
     # install software \
     apk add --no-cache bash openssl git && \
     # install openclaw \

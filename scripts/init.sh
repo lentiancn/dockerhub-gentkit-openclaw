@@ -7,8 +7,8 @@
 set -e
 
 # Load openclaw onboard-init.profile
-if [ -f /usr/local/openclaw/onboard-init.profile ]; then
-    source /usr/local/openclaw/onboard-init.profile
+if [ -f /home/openclaw/onboard-init.profile ]; then
+    source /home/openclaw/onboard-init.profile
 fi
 
 # Perform one-time initialization for OpenClaw onboard
@@ -39,6 +39,6 @@ if [ "${OPENCLAW_ONBOARD_INITIALIZED:false}" != "true" ]; then
   --gateway-token "${GATEWAY_TOKEN}"
 
   # Store to openclaw onboard-init.profile
-  echo "export OPENCLAW_ONBOARD_INITIALIZED=true" > /usr/local/openclaw/onboard-init.profile
+  echo "export OPENCLAW_ONBOARD_INITIALIZED=true" > /home/openclaw/onboard-init.profile
   echo "OpenClaw onboard initialization completed successfully."
 fi

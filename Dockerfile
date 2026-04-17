@@ -39,8 +39,7 @@ RUN set -eu && \
     addgroup -g 6001 -S openclaw && \
     adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
     # create directory \
-    mkdir -p /etc/docker/scripts && \
-    mkdir -p /usr/local/openclaw
+    mkdir -p /etc/docker/scripts
 
 # Copy resources
 COPY --chmod=755 \

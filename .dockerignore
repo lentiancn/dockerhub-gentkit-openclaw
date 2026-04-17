@@ -1,0 +1,7 @@
+*
+!scripts/**
+!.dockerignore
+!Dockerfile
+!FAQ.md
+!LICENSE
+!README.md

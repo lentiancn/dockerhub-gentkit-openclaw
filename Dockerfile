@@ -33,6 +33,8 @@ RUN set -eu && \
     npm cache clean --force && \
     # delete temp files \
     rm -rf /tmp/* /var/tmp/* /root/.npm /root/.cache /var/cache/apk/* && \
+    ## Create symbolic links (required by openclaw) \
+    ln -sf /usr/local/node/bin/openclaw /usr/local/bin/openclaw && \
     # create group and user \
     addgroup -g 6001 -S openclaw && \
     adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \

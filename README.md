@@ -1,9 +1,9 @@
 # OpenClaw on Docker
 
 [![MIT License](https://img.shields.io/github/license/lentiancn/docker-gentkit-openclaw.svg?style=flat-square&label=license)](LICENSE)
-[![GitHub Release](https://img.shields.io/github/tag/lentiancn/docker-gentkit-openclaw.svg?style=flat-square&sort=date&label=release)](https://github.com/lentiancn/docker-gentkit-openclaw/releases)
+[![GitHub Release](https://img.shields.io/github/tag/lentiancn/docker-gentkit-openclaw.svg?style=flat-square&label=release)](https://github.com/lentiancn/docker-gentkit-openclaw/releases)
 
-A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent).
+A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent) .
 
 ## Install Docker environment
 

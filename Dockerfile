@@ -15,8 +15,6 @@ FROM gentkit/node:${NODE_IMAGE_TAG}
 #
 # Define build arguments for image metadata
 #
-ARG OPENCLAW_IMAGE_VERSION="unknown"
-ARG OPENCLAW_IMAGE_BUILD_DATE="unknown"
 ARG OPENCLAW_NPM_VERSION="unknown"
 
 #
@@ -28,7 +26,7 @@ RUN set -eu && \
     # install openclaw \
     npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs \
-    #npm i -g @buape/carbon @larksuiteoapi/node-sdk @slack/web-api @slack/bolt grammy && \
+    #TODO install depend libs \
     # clean npm cache \
     npm cache clean --force && \
     # delete temp files \

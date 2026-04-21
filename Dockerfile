@@ -37,12 +37,12 @@ RUN set -eu && \
     addgroup -g 6001 -S openclaw && \
     adduser -u 6001 -S openclaw -G openclaw -h /home/openclaw && \
     # create directory \
-    mkdir -p /etc/docker/scripts
+    mkdir -p /etc/openclaw/scripts
 
 # Copy resources
 COPY --chmod=755 \
     scripts/* \
-    /etc/docker/scripts/
+    /etc/openclaw/scripts/
 
 #
 # Set user
@@ -62,4 +62,4 @@ EXPOSE 18789
 #
 # Set entrypoint
 #
-ENTRYPOINT ["/bin/bash", "-c", "/etc/docker/scripts/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "-c", "/etc/openclaw/scripts/entrypoint.sh"]

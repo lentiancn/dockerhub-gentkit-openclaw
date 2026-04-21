@@ -7,7 +7,7 @@
 set -e
 
 # Initialize
-source /etc/docker/scripts/init.sh
+source /etc/openclaw/scripts/init.sh
 
 # Print version
 echo "node $(node -v)"

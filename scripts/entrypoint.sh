@@ -9,10 +9,5 @@ set -e
 # Initialize
 source /etc/openclaw/scripts/init.sh
 
-# Print version
-echo "node $(node -v)"
-echo "npm $(npm -v)"
-echo "$(openclaw -v)"
-
 # Run OpenClaw gateway
 exec openclaw gateway

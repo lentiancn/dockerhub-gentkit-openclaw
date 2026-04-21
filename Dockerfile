@@ -47,19 +47,6 @@ COPY --chmod=755 \
     /etc/docker/scripts/
 
 #
-# Image metadata labels following OCI Image Format Specification
-#
-LABEL maintainer="Len <lentiancn@126.com>" \
-      description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster🦞\" AI Agent)." \
-      org.opencontainers.image.title="OpenClaw on Docker" \
-      org.opencontainers.image.description="A lightweight Docker image for quick and easy deployment of OpenClaw (\"lobster🦞\" AI Agent)." \
-      org.opencontainers.image.vendor="GentKit" \
-      org.opencontainers.image.licenses="MIT" \
-      org.opencontainers.image.source="https://github.com/lentiancn/docker-gentkit-openclaw" \
-      org.opencontainers.image.version="${OPENCLAW_IMAGE_VERSION}" \
-      org.opencontainers.image.created="${OPENCLAW_IMAGE_BUILD_DATE}"
-
-#
 # Set user
 #
 USER openclaw

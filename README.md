@@ -5,6 +5,13 @@
 
 A lightweight Docker image for quick and easy deployment of OpenClaw ("lobster🦞" AI Agent) .
 
+## Tag naming convention
+
+| Image            | Tag                       | Description                                                               |
+|------------------|---------------------------|---------------------------------------------------------------------------|
+| gentkit/openclaw | <OPENCLAW_VERSION>-alpine | OpenClaw <OPENCLAW_VERSION> based on Alpine Linux (gentkit/alpine:latest) |
+| gentkit/openclaw | latest-alpine             | Current OpenClaw version based on Alpine Linux (gentkit/alpine:latest)    |
+
 ## Install Docker environment
 
 [Installation-Guide](https://github.com/lentiancn/open-docs/blob/main/en/Docker/2.Installation-Guide.md)

@@ -22,9 +22,6 @@ step 1 : Create home directory and set permission
 
 ```shell
 sudo mkdir -p /usr/local/openclaw
-
-# 6001 is the uid and gid of the user running the Docker container
-sudo chown -R 6001:6001 /usr/local/openclaw
 ```
 
 step 2 : Generate and remember your token
@@ -44,15 +41,15 @@ step 3 : Pull and run a new container
 ```shell
 sudo docker run -d \
 -p 18789:18789 \
--v /usr/local/openclaw:/home/openclaw/.openclaw:rw \
+-v /usr/local/openclaw:/root/.openclaw:rw \
 -e GATEWAY_TOKEN=<your_token> \
 --restart unless-stopped \
 --name OpenClaw \
 gentkit/openclaw:latest
 ```
 
-**NOTE** : It's recommended to set up **/home/openclaw/.openclaw** as a volume to ensure that your OpenClaw data can be
-backed up on the host machine.
+**NOTE** : It's recommended to set up **/root/.openclaw** as a volume to ensure that your OpenClaw data can be
+backed up on your host.
 
 **GATEWAY_TOKEN** can be set to any value you prefer (obtainable via **openssl rand -hex 32**). If not provided, the
 system will retrieve it via **openssl rand -hex 32** by default.

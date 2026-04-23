@@ -26,7 +26,7 @@ RUN set -eu && \
     # install openclaw \
     npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs \
-    npm i -g @larksuiteoapi/node-sdk \
+    npm i -g @larksuiteoapi/node-sdk && \
     # clean npm cache \
     npm cache clean --force && \
     # delete temp files \

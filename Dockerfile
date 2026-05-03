@@ -26,7 +26,11 @@ RUN set -eu && \
     # install openclaw \
     npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs \
-    npm i -g @larksuiteoapi/node-sdk && \
+    npm i -g @larksuiteoapi/node-sdk github-cli && \
+    # install jq depended by session-logs \
+    npm i -g jq && \
+    # install uv \
+    curl -LsSf https://astral.sh/uv/install.sh | sh && \
     # clean npm cache \
     npm cache clean --force && \
     # delete temp files \

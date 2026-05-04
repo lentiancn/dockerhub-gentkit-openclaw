@@ -5,10 +5,10 @@
 #
 
 #
-# Use 'gentkit/node' as the base image with specified version
+# Stage 1 : Builder
 #
-# NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
-#
+## Use 'gentkit/node' as the base image with specified version
+## NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
 ARG NODE_IMAGE_TAG="unknown"
 FROM gentkit/node:${NODE_IMAGE_TAG} AS builder
 
@@ -41,12 +41,20 @@ COPY --chmod=755 \
     scripts \
     /etc/openclaw/scripts
 
+#
+# Stage 2 : Production
+#
 FROM scratch AS production
 
 #
 # Copy resources
 #
 COPY --from=builder / /
+
+#
+# Set the working directory to /root for subsequent instructions
+#
+WORKDIR /root
 
 #
 # Expose port

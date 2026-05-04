@@ -22,11 +22,11 @@ ARG OPENCLAW_NPM_VERSION="unknown"
 #
 RUN set -eu && \
     # install software \
-    apk add --no-cache bash openssl git python3 py3-pip curl && \
+    apk add --no-cache bash openssl git python3 py3-pip curl github-cli && \
     # install openclaw \
     npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs \
-    npm i -g @larksuiteoapi/node-sdk github-cli && \
+    npm i -g @larksuiteoapi/node-sdk clawhub && \
     # install jq depended by session-logs \
     npm i -g jq && \
     # install uv \

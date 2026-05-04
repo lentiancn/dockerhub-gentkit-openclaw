@@ -10,7 +10,7 @@
 # NOTE: If it is "unknown", cause the 'gentkit/node' base image to fail the build to ensure the correct version is referenced.
 #
 ARG NODE_IMAGE_TAG="unknown"
-FROM gentkit/node:${NODE_IMAGE_TAG}
+FROM gentkit/node:${NODE_IMAGE_TAG} AS builder
 
 #
 # Define build arguments for image metadata
@@ -27,10 +27,6 @@ RUN set -eu && \
     npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs \
     npm i -g @larksuiteoapi/node-sdk clawhub && \
-    # install jq depended by session-logs \
-    npm i -g jq && \
-    # install uv \
-    curl -LsSf https://astral.sh/uv/install.sh | sh && \
     # clean npm cache \
     npm cache clean --force && \
     # delete temp files \
@@ -44,6 +40,13 @@ RUN set -eu && \
 COPY --chmod=755 \
     scripts \
     /etc/openclaw/scripts
+
+FROM scratch AS production
+
+#
+# Copy resources
+#
+COPY --from=builder / /
 
 #
 # Expose port

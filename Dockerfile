@@ -29,9 +29,8 @@ RUN set -eu && \
     npm i -g @larksuiteoapi/node-sdk clawhub && \
     # install uv \
     curl -LsSf https://astral.sh/uv/install.sh | sh && \
-    # configure environment variables \
-    echo -e "\
-source \"$HOME/.local/bin/env\"" > /etc/profile.d/openclaw.sh && \
+    ln -sf /root/.local/bin/uv /usr/local/bin/uv && \
+    ln -sf /root/.local/bin/uvx /usr/local/bin/uvx && \
     # Create symbolic links (required by openclaw) \
     ln -sf /usr/local/node/bin/openclaw /usr/local/bin/openclaw && \
     # create directory \

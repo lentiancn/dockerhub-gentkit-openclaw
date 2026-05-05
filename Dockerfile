@@ -26,7 +26,7 @@ RUN set -eu && \
     # install openclaw \
     npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs \
-    npm i -g @larksuiteoapi/node-sdk clawhub && \
+    npm i -g clawhub && \
     # install uv \
     curl -LsSf https://astral.sh/uv/install.sh | sh && \
     ln -sf /root/.local/bin/uv /usr/local/bin/uv && \

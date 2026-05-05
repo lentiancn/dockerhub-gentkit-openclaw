@@ -22,7 +22,7 @@ ARG OPENCLAW_NPM_VERSION="unknown"
 #
 RUN set -eu && \
     # install software \
-    apk add --no-cache bash openssl git python3 py3-pip curl github-cli && \
+    apk add --no-cache bash openssl git python3 py3-pip curl github-cli make && \
     # install openclaw \
     npm i -g openclaw@${OPENCLAW_NPM_VERSION} --loglevel error --no-fund --no-audit && \
 	# install depend libs \

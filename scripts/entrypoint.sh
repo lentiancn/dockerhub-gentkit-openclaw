@@ -6,6 +6,9 @@
 #
 set -e
 
+# Load environment variables
+source /etc/profile.d/openclaw.sh
+
 # Initialize
 source /etc/openclaw/scripts/init.sh
 
